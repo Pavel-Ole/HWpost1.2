@@ -12,7 +12,7 @@ public class APIPostTest {
 // Предусловия
         given()
                 .baseUri("https://postman-echo.com")
-                .body("some data") // отправляемые данные (заголовки и query можно выставлять аналогично)
+                .body("some value") // отправляемые данные (заголовки и query можно выставлять аналогично)
 // Выполняемые действия
                 .when()
                 .post("/post")
@@ -23,4 +23,18 @@ public class APIPostTest {
         ;
     }
 
+
+    @Test
+    public void shouldTestRussiaText() {
+        given()
+                .baseUri("https://postman-echo.com")
+                .contentType("text/plain; charset=UTF-8")
+                .body("Привет")
+                .when()
+                .post("/post")
+                .then()
+                .statusCode(200)
+                .body("data", equalTo("Привет"))
+        ;
+    }
 }
